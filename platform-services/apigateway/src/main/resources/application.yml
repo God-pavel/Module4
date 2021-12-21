@@ -1,0 +1,28 @@
+server:
+  port: 8762
+spring:
+  application:
+    name: gateway-server
+  cloud:
+    gateway:
+      routes:
+        - id: one_service_route
+          uri: lb://oneservice
+          predicates:
+            - Path=/one/**
+        - id: two_service_route
+          uri: lb://twoservice
+          predicates:
+            - Path=/two/**
+        - id: common_route
+          uri: lb://common
+          predicates:
+            - Path=/common/**
+eureka:
+  client:
+    fetchRegistry: true
+    registerWithEureka: true
+    preferIpAddress: true
+    serviceUrl:
+      defaultZone: ${EUREKA_URI:http://localhost:8761/eureka}
+

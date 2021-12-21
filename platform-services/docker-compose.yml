@@ -1,0 +1,20 @@
+version: "3"
+services:
+  discovery:
+    image: discovery-image
+    container_name: discovery
+    ports:
+      - "8761:8761"
+  apigateway:
+    image: apigateway-image
+    container_name: apigateway
+    ports:
+      - "8762:8762"
+    depends_on:
+      - discovery
+  one:
+    image: one-image
+    container_name: one
+    depends_on:
+      - discovery
+      - apigateway
